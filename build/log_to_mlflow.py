@@ -1,6 +1,6 @@
 import mlflow
 
-mlflow.set_tracking_uri("http://34.250.151.22:5000")
+mlflow.set_tracking_uri("MLFLOW_SERVER")
 mlflow.set_experiment("incident_agents")
 
 with mlflow.start_run(run_name="incident_agent_package"):
@@ -10,3 +10,4 @@ with mlflow.start_run(run_name="incident_agent_package"):
         local_path="C:\\Users\\vaibhava\\agenticai\\agentbuilder\\agent-platform\\deployable\\langgraph_example_v1757961993.tar.gz",
         artifact_path="packages"
     )
+
