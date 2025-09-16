@@ -4,7 +4,7 @@ import time
 from pathlib import Path
 import boto3
 
-S3_BUCKET = os.environ.get("S3_ARTIFACT_BUCKET") or "raise-native-s3-bucket"
+S3_BUCKET = os.environ.get("S3_ARTIFACT_BUCKET") or "s3-bucket"
 AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
 
 def make_tarball(src_dir: str, out_path: str):
@@ -41,3 +41,4 @@ if __name__ == "__main__":
         print("✅ Uploaded:", s3_uri)
     else:
         print("⚠️  Skipping S3 upload. No bucket configured.")
+
