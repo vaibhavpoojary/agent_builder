@@ -1,0 +1,8 @@
+boto3
+agentcore
+mlflow
+pandas
+langgraph
+python-dotenv
+langchain
+pydantic

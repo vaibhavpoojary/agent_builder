@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Artifacts bucket + CloudWatch Dashboard + SNS for Agent monitoring
+
+Resources:
+  ArtifactsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${AWS::AccountId}-agent-artifacts"
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: expire-old-artifacts
+            Status: Enabled
+            ExpirationInDays: 365
+  AgentAlertsTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: AgentAlerts
+
+  AgentCloudWatchDashboard:
+    Type: AWS::CloudWatch::Dashboard
+    Properties:
+      DashboardName: agent-platform-dashboard
+      DashboardBody: !Sub |
+        {
+          "widgets": [
+            {
+              "type": "metric",
+              "x": 0,
+              "y": 0,
+              "width": 12,
+              "height": 6,
+              "properties": {
+                "metrics": [
+                  [ "AWS/Logs", "IncomingLogEvents", "LogGroupName", "/aws/agentcore/agent-*" ]
+                ],
+                "period": 60,
+                "stat": "Sum",
+                "title": "Agent Log Events"
+              }
+            }
+          ]
+        }
